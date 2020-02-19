@@ -36,21 +36,22 @@ Note that the answer must be a substring, `pwke` is a subsequence and not a subs
 Build Requirements
 ------------------
 ```
-# Build Requirements here
+Java installed
 ```
 
 
 How to build
 ------------
 ```
-# instructions here
+1) javac FirstCodeChallenge.java
 ```
 
 
 How to Run
 ----------
 ```
-# instructions here
+1) java FirstCodeChallenge
+2) input string in inputDialog
 ```
 
 
