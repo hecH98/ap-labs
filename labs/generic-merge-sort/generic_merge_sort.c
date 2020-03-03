@@ -15,7 +15,11 @@ int main(int argc, char** argv){
 	// 	array[i] = argv[i+1];
 	int i;
 	for ( i = 1; i < argc; i++){
-		if ( atoi(argv[i]) || atoi(argv[i]) == 0){
+		if ( strcmp("0", argv[i]) == 0) {
+			isNumber = 1;
+			printf("%s,",argv[i]);
+		}
+		else if ( atoi(argv[i]) ){
 			isNumber = 1;
 		}
 		else {
