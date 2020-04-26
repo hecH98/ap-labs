@@ -2,12 +2,12 @@
 package main
 
 import (
+	"os"
+	"fmt"
 	"io"
 	"log"
 	"net"
 	"time"
-	"os"
-	"fmt"
 )
 
 func handleConn(c net.Conn) {
