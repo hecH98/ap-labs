@@ -11,20 +11,35 @@ import (
 	"log"
 	"net"
 	"os"
+	"fmt"
+	"flag"
 )
-
+// go run client.go -user user2 -server localhost:9000
 //!+
+
 func main() {
-	conn, err := net.Dial("tcp", "localhost:8000")
+	server := flag.String("server", "", "host:port")
+	user := flag.String("user", "", "username")
+	flag.Parse()
+
+	fmt.Println("user value ", *user)
+	fmt.Println("server value ", *server)
+	conn, err := net.Dial("tcp", *server)
 	if err != nil {
 		log.Fatal(err)
 	}
+	enterUser := true
 	done := make(chan struct{})
 	go func() {
+		if enterUser {
+			fmt.Print("Enter your username: " + *user + " > ")
+			enterUser = false
+		}
 		io.Copy(os.Stdout, conn) // NOTE: ignoring errors
 		log.Println("done")
 		done <- struct{}{} // signal the main goroutine
 	}()
+	fmt.Println("esperando mensaje")
 	mustCopy(conn, os.Stdin)
 	conn.Close()
 	<-done // wait for background goroutine to finish
