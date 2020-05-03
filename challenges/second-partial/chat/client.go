@@ -16,7 +16,7 @@ import (
 )
 // go run client.go -user user2 -server localhost:9000
 //!+
-
+ 
 func main() {
 	server := flag.String("server", "", "host:port")
 	user := flag.String("user", "", "username")

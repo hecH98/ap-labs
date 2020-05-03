@@ -67,7 +67,7 @@ func showUsers() string{
 		usrs += allUsers[user].name + ", "
 	}
 	// fmt.Println(usrs)
-	return usrs
+	return usrs 
 }
 
 func searchUser(usuario string) string{
