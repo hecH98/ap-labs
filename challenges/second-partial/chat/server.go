@@ -60,18 +60,18 @@ func broadcaster() {
 //!-broadcaster
 
 func showUsers() string{
-	fmt.Println(len(allUsers))
+	// fmt.Println(len(allUsers))
 	usrs := "irc-server > "
 	for user := range allUsers {
 		// fmt.Println(allUsers[user])
 		usrs += allUsers[user].name + ", "
 	}
-	fmt.Println(usrs)
+	// fmt.Println(usrs)
 	return usrs
 }
 
 func searchUser(usuario string) string{
-	fmt.Println(len(allUsers))
+	// fmt.Println(len(allUsers))
 	usr := "irc-server > "
 	found := false
 	for user := range allUsers {
@@ -86,7 +86,7 @@ func searchUser(usuario string) string{
 	if !found {
 		usr += "user not found"
 	}
-	fmt.Println(usr)
+	// fmt.Println(usr)
 	return usr
 }
 
@@ -99,7 +99,7 @@ func messageUser(msgFrom, msgTo, msg string){
 	for user := range allUsers {
 		if allUsers[user].name == msgTo {
 			allUsers[user].canal <- "irc-server > Message from [" + msgFrom + "]: " + msg
-			fmt.Println(allUsers[user])
+			// fmt.Println(allUsers[user])
 			break
 		}
 	}
@@ -108,10 +108,11 @@ func messageUser(msgFrom, msgTo, msg string){
 func kickUser(usuario string){
 	for user := range allUsers {
 		if allUsers[user].name == usuario {
+			fmt.Println("irc-server > [" + usuario + "] was kicked")
 			allUsers[user].canal <- "You have been kicked for offensive language"
 			time.Sleep(1 * time.Second)
 			allUsers[user].connection.Close()
-			fmt.Println(allUsers[user])
+			
 			break
 		}
 	}
@@ -153,24 +154,23 @@ func handleConn(conn net.Conn) {
 		// fmt.Println(comando[0])
 		switch comando[0] {
 		case "/users":
-			fmt.Println("check users")
+			// fmt.Println("check users")
 			ch <- showUsers()
 		case "/msg":
 			messageUser(who.name, comando[1], comando[2])
-			fmt.Println("message to someone")
+			// fmt.Println("message to someone")
 		case "/time":
 			ch <- getTime()
-			fmt.Println("see time")
+			// fmt.Println("see time")
 		case "/user":
 			ch <- searchUser(comando[1])
-			fmt.Println("info user")
+			// fmt.Println("info user")
 		case "/kick":
 			if who.admin {
 				// time.Sleep(1 * time.Second)
 				kickUser(comando[1])
 				messages <- "irc-server > [" + comando[1] + "] has been kicked for offensive language"
-				
-				fmt.Println("kick user")
+				// fmt.Println("kick user")
 			} else {
 				ch <- "Cannot kick user, not server admin"
 			}
